@@ -10,7 +10,7 @@ for job_element in job_elements:
     title_element = job_element.find("h2", class_="title")
     company_element = job_element.find("h3", class_="company")
     location_element = job_element.find("p", class_="location")
-    link = job_element.find("footer", class_="card-footer").find("a").find_next_sibling()
+    link = job_element.find("footer", class_="card-footer").find("a", text="Apply")
     print(title_element.text.strip())
     print(company_element.text.strip())
     print(location_element.text.strip())
