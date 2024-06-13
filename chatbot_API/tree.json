@@ -1,0 +1,31 @@
+{
+    "Hi I am hub108 bud, How can I help you?": {
+        "Hi! I want to make a booking": "Sure! When would you like to book?",
+        "Hi! I want to request an appointment": "Sure! When would you like to date your appointment?"
+    },
+    "Sure! When would you like to book?": {
+        "Today": "How many people will you bring?",
+        "Tomorrow": "How many people will you bring?",
+        "Day after Tomorrow": "How many people will you bring?"
+    },
+    "How many people will you bring?": {
+        "Only me": "How many hours do you want to book?",
+        "2-5 people": "How many hours do you want to book?",
+        "5+ people": "How many hours do you want to book?"
+    },
+    "How many hours do you want to book?": {
+        "1-5 hours": "Okay here are the list of options you can choose!",
+        "5-12 hours": "Okay here are the list of options you can choose!"
+    },
+    "Sure! When would you like to date your appointment?": {
+        "Today": "At what time do you want to be appointed?",
+        "Tomorrow": "At what time do you want to be appointed?",
+        "Day after Tomorrow": "At what time do you want to be appointed?"
+    },
+    "At what time do you want to be appointed?": {
+        "Morning":"Okay here are the morning appointment times available!",
+        "Noon":"Okay here are the noon appointment times available!",
+        "Evening": "Okay here are the evening appointment times available!"
+    },
+    "end": ["Okay here are the evening appointment times available!","Okay here are the noon appointment times available!","Okay here are the morning appointment times available!","Okay here are the list of options you can choose!"]
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static',filename='App.css') }}">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="App">
+        <div class='chat-container'>
+            <!-- <div class="session">
+                <div class='sys-msg'>
+                    <p>Hi I am hub108 bud, How can I help you?</p>
+                </div>
+                <div class='user-msg'>
+                    <p>Hi</p>
+                </div>
+                <div class='user-choices'>
+                    <button onclick="handleChoice(this)">Hi! I want to make a booking</button>
+                    <button>user choice</button>
+                    <button>user choice</button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <script>
+        function createSession(sys, choices) {
+            const chatContainer = document.querySelector(".chat-container");
+            //session
+            const session = document.createElement("div");
+            session.classList.add('session');
+
+            //sysmsg
+            const sysmsg = document.createElement("div");
+            sysmsg.classList.add('sys-msg');
+            sysmsg.innerHTML = "<p>" + sys + "</p>";
+            session.append(sysmsg);
+
+            //choices
+            if (choices == "The END") {
+                const userchoices = document.createElement("div");
+                userchoices.classList.add('user-choices');
+                userchoices.innerHTML += "<button onclick='startconvo()'>New Chat</button>";
+                session.append(userchoices);
+            } else {
+                const userchoices = document.createElement("div");
+                userchoices.classList.add('user-choices');
+                choices.forEach(choice => {
+                    userchoices.innerHTML += "<button onclick='handleChoice(this)'>" + choice + "</button>";
+                });
+                session.append(userchoices);
+            }
+
+            chatContainer.append(session);
+        }
+
+        function solveUser(choice) {
+            var msg = choice.innerHTML;
+            const session = choice.parentElement.parentElement;
+
+            //adding usermsg
+            const usermsg = document.createElement("div");
+            usermsg.classList.add("user-msg");
+            usermsg.innerHTML = "<p>" + msg + "</p>";
+            session.append(usermsg)
+
+            choice.parentElement.remove()
+        }
+
+        function handleChoice(but) {
+            var user = but.innerHTML;
+            var sys = but.parentElement.parentElement.children[0].children[0].innerHTML;
+
+            solveUser(but);
+
+            fetch("http://127.0.0.1:5000/respond", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "sys": sys,
+                    "user": user,
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    respon = data["respon"];
+                    console.log(respon)
+                }).then(() => {
+                    fetch("http://127.0.0.1:5000/getchoices", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            "sys": respon
+                        })
+                    }).then(response => response.json())
+                        .then(data => {
+                            choices = data["choices"];
+                            console.log(choices)
+                            createSession(respon, choices)
+                        });
+                }).catch(error => console.error('Error fetching data:', error));
+
+        }
+
+        function startconvo() {
+            document.querySelector(".chat-container").innerHTML = "";
+
+            fetch("http://127.0.0.1:5000/respond", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "sys": "Hi I am hub108 bud, How can I help you?",
+                    "user": ""
+                })
+            }).then(response => response.json())
+                .then(data => {
+                    respon = data["respon"];
+                    console.log(respon)
+                }).then(() => {
+                    fetch("http://127.0.0.1:5000/getchoices", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            "sys": "Hi I am hub108 bud, How can I help you?"
+                        })
+                    }).then(response => response.json())
+                        .then(data => {
+                            choices = data["choices"];
+                            console.log(choices)
+                            createSession(respon, choices)
+                        });
+                }).catch(error => console.error('Error fetching data:', error));
+        }
+        startconvo()
+    </script>
+</body>
+
+</html>
