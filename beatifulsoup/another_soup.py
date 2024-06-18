@@ -24,4 +24,4 @@ def scrape(page):
         return scrape(next_page.get("href"))
 scrape("https://skidrowcodexgames.com/")
 df = pandas.DataFrame(tree)
-df.to_csv("test.csv", index=False
+df.to_csv("test.csv", index=False)
